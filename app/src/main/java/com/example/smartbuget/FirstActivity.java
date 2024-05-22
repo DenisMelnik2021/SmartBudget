@@ -31,6 +31,7 @@ public class FirstActivity extends AppCompatActivity {
             editor.putFloat("cloth", 0);
             editor.putFloat("education", 0);
             editor.putFloat("debts", 0);
+            editor.putString("cat", "");
             editor.apply();
             editor.putBoolean("isFirstRun", false);
             editor.apply();

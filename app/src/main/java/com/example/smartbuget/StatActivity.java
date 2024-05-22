@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class StatActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
         main = new Intent(StatActivity.this, MainActivity.class);
+        main.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         binding.buttonBackS.setOnClickListener(v -> startActivity(main));
         Cursor cursor = dbHelper.getAllTransactions();
@@ -80,6 +82,8 @@ public class StatActivity extends AppCompatActivity {
         data.add(new ValueDataEntry("Одежда и обувь", sharedPreferences.getFloat("cloth", 0)));
         data.add(new ValueDataEntry("Образование", sharedPreferences.getFloat("education", 0)));
         data.add(new ValueDataEntry("Долги", sharedPreferences.getFloat("debts", 0)));
+
+        Log.d("Buget", String.valueOf(sharedPreferences.getFloat("products", 0)));
 
         pie.data(data);
 

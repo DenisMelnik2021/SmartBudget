@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smartbuget.databinding.ActivityExpenseBinding;
+
+import java.util.ArrayList;
 
 public class ExpenseActivity extends AppCompatActivity {
     private ActivityExpenseBinding binding;
@@ -33,6 +36,9 @@ public class ExpenseActivity extends AppCompatActivity {
             float updatedBalance = currentBalance - amountToAdd;
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putFloat("balance", updatedBalance);
+            float currentProducts = sharedPreferences.getFloat(sharedPreferences.getString("cat", ""), 0);
+            float updatedProducts = currentProducts + amountToAdd;
+            editor.putFloat(sharedPreferences.getString("cat", ""), updatedProducts);
             editor.apply();
             dbHelper.addExpense(Double.parseDouble(String.valueOf(binding.editTextExpense.getText())));
         });
@@ -43,67 +49,35 @@ public class ExpenseActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 switch (selectedValue) {
                     case "Продукты": {
-                        float currentProducts = sharedPreferences.getFloat("products", 0);
-                        String amountString = String.valueOf(binding.editTextExpense.getText());
-                        float amountToAdd = amountString.isEmpty() ? 0 : Float.parseFloat(amountString);
-                        float updatedProducts = currentProducts + amountToAdd;
-                        editor.putFloat("products", updatedProducts);
+                        editor.putString("cat", "products");
                         break;
                     }
                     case "Жилищные расходы": {
-                        float currentHousing = sharedPreferences.getFloat("housing", 0);
-                        String amountString = String.valueOf(binding.editTextExpense.getText());
-                        float amountToAdd = amountString.isEmpty() ? 0 : Float.parseFloat(amountString);
-                        float updatedProducts = currentHousing + amountToAdd;
-                        editor.putFloat("housing", updatedProducts);
+                        editor.putString("cat", "housing");
                         break;
                     }
                     case "Транспорт": {
-                        float currentTransport = sharedPreferences.getFloat("transport", 0);
-                        String amountString = String.valueOf(binding.editTextExpense.getText());
-                        float amountToAdd = amountString.isEmpty() ? 0 : Float.parseFloat(amountString);
-                        float updatedProducts = currentTransport + amountToAdd;
-                        editor.putFloat("transport", updatedProducts);
+                        editor.putString("cat", "transport");
                         break;
                     }
                     case "Медицина": {
-                        float currentMedicine = sharedPreferences.getFloat("medicine", 0);
-                        String amountString = String.valueOf(binding.editTextExpense.getText());
-                        float amountToAdd = amountString.isEmpty() ? 0 : Float.parseFloat(amountString);
-                        float updatedProducts = currentMedicine + amountToAdd;
-                        editor.putFloat("medicine", updatedProducts);
+                        editor.putString("cat", "medicine");
                         break;
                     }
                     case "Развлечения": {
-                        float currentEntertainment = sharedPreferences.getFloat("entertainment", 0);
-                        String amountString = String.valueOf(binding.editTextExpense.getText());
-                        float amountToAdd = amountString.isEmpty() ? 0 : Float.parseFloat(amountString);
-                        float updatedProducts = currentEntertainment + amountToAdd;
-                        editor.putFloat("entertainment", updatedProducts);
+                        editor.putString("cat", "entertainment");
                         break;
                     }
                     case "Одежда и обувь": {
-                        float currentCloth = sharedPreferences.getFloat("cloth", 0);
-                        String amountString = String.valueOf(binding.editTextExpense.getText());
-                        float amountToAdd = amountString.isEmpty() ? 0 : Float.parseFloat(amountString);
-                        float updatedProducts = currentCloth + amountToAdd;
-                        editor.putFloat("cloth", updatedProducts);
+                        editor.putString("cat", "cloth");
                         break;
                     }
                     case "Образование": {
-                        float currenteEducation = sharedPreferences.getFloat("education", 0);
-                        String amountString = String.valueOf(binding.editTextExpense.getText());
-                        float amountToAdd = amountString.isEmpty() ? 0 : Float.parseFloat(amountString);
-                        float updatedProducts = currenteEducation + amountToAdd;
-                        editor.putFloat("education", updatedProducts);
+                        editor.putString("cat", "education");
                         break;
                     }
                     case "Долги": {
-                        float currenteDebts = sharedPreferences.getFloat("debts", 0);
-                        String amountString = String.valueOf(binding.editTextExpense.getText());
-                        float amountToAdd = amountString.isEmpty() ? 0 : Float.parseFloat(amountString);
-                        float updatedProducts = currenteDebts + amountToAdd;
-                        editor.putFloat("debts", updatedProducts);
+                        editor.putString("cat", "debts");
                         break;
                     }
                 }
